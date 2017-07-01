@@ -1,5 +1,6 @@
-- Need to be able to automate testing segments of real data against the algorithm to make sure this thing actually works and hopefully train it further
+- Enhance testing to pass/fail items within certainity and provide overall accuracy feedback
 - Should be able to input desired date with fallback to current date
 - Optimize the hell out of it
+- Refactor, cleanup, comments
 - Provide better interface for user
-- Cleanup, comments
+- Make it smerter
