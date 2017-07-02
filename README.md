@@ -28,7 +28,7 @@ PREDICTION_CSV_PATH=test.csv REALITY_CSV_PATH=reality.csv CUSTOMER=1000075613 py
 
 ## Output
 
-The output will consist of results as seen below for each item the customer orders somewhat frequently. `Time Until Next Order` is currently only using today"s date for comparison, making this dynamic is on the [todo](TODO.md) list.
+The output will consist of results as seen below for each item the customer orders. `Time Until Next Order` is currently only using today"s date for comparison, making this dynamic is on the [todo](TODO.md) list.
 
 ```bash
 ---------------------------
