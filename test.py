@@ -24,6 +24,10 @@ def test_prediction():
     customer_data = data_frame.loc[
         (data_frame.customer == customer), ["date", "quantity", "materialId"]]
     items = customer_data["materialId"].unique()
+    test_results = {}
+    successes = []
+    warnings = []
+    failures = []
 
     for material_id in items:
         print "--- Test: " + str(material_id)
@@ -33,7 +37,7 @@ def test_prediction():
             ["date", "quantity"]]
         sorted_item_orders = orders_with_items.sort_values("date")
         reality_date = sorted_item_orders.head(1)["date"].values[0]
-        predicted_item = {}
+        message_color = ""
 
         if material_id in prediction:
             predicted_item = prediction[material_id]
@@ -41,16 +45,49 @@ def test_prediction():
             if "next_order_date" in predicted_item:
                 prediction_delta = np.timedelta64(predicted_item["next_order_date"] - reality_date, "D")
                 success = (prediction_delta < np.timedelta64(1, "D")) and (prediction_delta > np.timedelta64(-1, "D"))
+                warning = (prediction_delta < np.timedelta64(3, "D")) and (prediction_delta > np.timedelta64(-3, "D"))
                 message_color = "okgreen" if success else "warning"
 
-                print "Confidence Level: " + str(predicted_item["confidence"])
-                print "Predicted Date: " + str(predicted_item["next_order_date"])
-                print "Reality Date: " + str(reality_date)
-                print colors.line(message_color, "Delta: " + str(prediction_delta))
+                if success:
+                    successes.append(material_id)
+                    message_color = "okgreen"
+                elif warning:
+                    warnings.append(material_id)
+                    message_color = "warning"
+                else:
+                    failures.append(material_id)
+                    message_color = "fail"
+
+                print "Confidence Level : " + str(predicted_item["confidence"])
+                print "Predicted Date   : " + str(predicted_item["next_order_date"])
+                print "Reality Date     : " + str(reality_date)
+                print colors.line(
+                    message_color,
+                    "Delta            : " + str(prediction_delta))
+
+                test_results[material_id] = {
+                    "confidence": predicted_item["confidence"],
+                    "predicted_date": predicted_item["next_order_date"],
+                    "reality_date": reality_date,
+                    "prediction_delta": prediction_delta,
+                    "success": success
+                }
+
             else:
-                print colors.line("warning", "No date was predicted")
+                print "Not ordering enough data to predict this item"
 
         else:
             print "This item was not in previous orders"
+
+    # print successes
+    success_percentage = 100 * (float(len(successes)) / float(len(test_results)))
+    warning_percentage = 100 * (float(len(warnings)) / float(len(test_results)))
+    failure_percentage = 100 * (float(len(failures)) / float(len(test_results)))
+
+    print colors.line("okgreen", "--- Success percentage (within 1 day)    : " + str(success_percentage))
+    print colors.line("warning", "--- Warning percentage (within 3 days)   : " + str(warning_percentage))
+    print colors.line("fail", "--- Failure percentage (everything else) : " + str(failure_percentage))
+
+    return test_results
 
 test_prediction()

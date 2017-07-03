@@ -53,10 +53,10 @@ def predict_order_date_of_items_for_customer(customer, csv_path, desired_date_ti
             next_order_date = last_ordered_date + average_days_between_orders
             time_until_next_order = next_order_date - desired_date_time_64
 
-            print "Confidence: " + str(item_ordered_percentage)
-            print "Last Order: " + str(last_ordered_date)
-            print "Next Order: " + str(next_order_date)
-            print "Time Until Next Order: " + str(time_until_next_order)
+            print "Confidence            : " + str(item_ordered_percentage)
+            print "Last Order            : " + str(last_ordered_date)
+            print "Next Order            : " + str(next_order_date)
+            print "Time Until Next Order : " + str(time_until_next_order)
 
             result[material_id] = {
                 "confidence": item_ordered_percentage,
