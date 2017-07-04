@@ -1,4 +1,6 @@
-- Enhance testing to pass/fail items within certainity and provide overall accuracy feedback
+- Add excel for regular run as well
+- Configuration file instead of env vars
+- https://dev.to/dmerejkowsky/how-i-lint-my-python
 - Should be able to input desired date with fallback to current date
 - Optimize the hell out of it
 - Refactor, cleanup, comments
