@@ -2,13 +2,13 @@ import os
 import datetime
 import predict
 import colors
-# import config
+import config
 import pandas as pd
 import numpy as np
 
-prediction_csv_path = os.environ["PREDICTION_CSV_PATH"]
-reality_csv_path = os.environ["REALITY_CSV_PATH"]
-customer = os.environ["CUSTOMER"]
+prediction_csv_path = config.settings["prediction_csv_path"]
+reality_csv_path = config.settings["reality_csv_path"]
+customer = config.settings["customer"]
 
 def test_prediction():
     print colors.line("okgreen", "--- Testing ---")
