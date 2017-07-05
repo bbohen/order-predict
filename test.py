@@ -88,14 +88,14 @@ def test_prediction():
     overall_results = {
         "customer": customer,
         "items_tested": len(test_results),
-        "success_percentage": success_percentage,
-        "warning_percentage": warning_percentage,
-        "failure_percentage": failure_percentage
+        "success_percentage": "%.2f" % success_percentage,
+        "warning_percentage": "%.2f" % warning_percentage,
+        "failure_percentage": "%.2f" % failure_percentage
     }
 
-    print colors.line("okgreen", "--- Success percentage (within 1 day)    : " + str(success_percentage))
-    print colors.line("warning", "--- Warning percentage (within 3 days)   : " + str(warning_percentage))
-    print colors.line("fail", "--- Failure percentage (everything else) : " + str(failure_percentage))
+    print colors.line("okgreen", "--- Success percentage (within 1 day)    : " + str("%.2f" % success_percentage))
+    print colors.line("warning", "--- Warning percentage (within 3 days)   : " + str("%.2f" % warning_percentage))
+    print colors.line("fail", "--- Failure percentage (everything else) : " + str("%.2f" % failure_percentage))
 
     # Create dataframes of the results
     item_results_data_frame = pd.DataFrame(test_results, columns=["material_id", "confidence", "predicted_date", "reality_date", "prediction_delta", "success"])
