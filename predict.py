@@ -54,14 +54,14 @@ def predict_order_date_of_items_for_customer(customer, csv_path, desired_date_ti
             next_order_date = last_ordered_date + average_days_between_orders
             time_until_next_order = next_order_date - desired_date_time_64
 
-            print "Confidence            : " + str(item_ordered_percentage)
+            print "Confidence            : " + str("%.2f" % item_ordered_percentage)
             print "Last Order            : " + str(last_ordered_date)
             print "Next Order            : " + str(next_order_date)
             print "Time Until Next Order : " + str(time_until_next_order)
 
             # Dictionary to test again
             result_dic[material_id] = {
-                "confidence": item_ordered_percentage,
+                "confidence": "%.2f" % item_ordered_percentage,
                 "last_ordered_date": last_ordered_date,
                 "predicted_next_order_date": next_order_date,
                 "time_until_next_order": time_until_next_order
@@ -69,7 +69,7 @@ def predict_order_date_of_items_for_customer(customer, csv_path, desired_date_ti
 
             result_list.append({
                 "material_id": material_id,
-                "confidence": item_ordered_percentage,
+                "confidence": "%.2f" % item_ordered_percentage,
                 "last_ordered_date": last_ordered_date,
                 "predicted_next_order_date": next_order_date,
                 "time_until_next_order": time_until_next_order
@@ -80,7 +80,7 @@ def predict_order_date_of_items_for_customer(customer, csv_path, desired_date_ti
             print message
 
             result_dic[material_id] = {
-                "confidence": item_ordered_percentage,
+                "confidence": "%.2f" % item_ordered_percentage,
                 "message": message
             }
 
