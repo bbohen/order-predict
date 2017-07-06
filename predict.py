@@ -1,12 +1,17 @@
-import os
+"""
+Predict
+"""
+
 import time
-import datetime
+import colors
 import pandas as pd
 import numpy as np
 
+"""
+Receive CSV, predict the next ordering date for each item a customer has
+"""
 def predict_order_date_of_items_for_customer(customer, csv_path, desired_date_time):
-    print "Analyzing order data "
-    print "Customer is " + customer
+    print colors.line("header", "--- Loading prediction data from " + csv_path + " this may take a while")
     start_time = time.time()
 
     # parse csv data
@@ -25,8 +30,6 @@ def predict_order_date_of_items_for_customer(customer, csv_path, desired_date_ti
     # run calculations on every item ordered by the customer
     # is there a way to do this without the for loop? a method of dataframe maybe?
     for material_id in items:
-        print "Material ID: " + str(material_id)
-
         # select orders that contain this item
         orders_with_items = data_frame.loc[
             ((data_frame.materialId == material_id) & (data_frame.customer == customer)),
@@ -54,11 +57,6 @@ def predict_order_date_of_items_for_customer(customer, csv_path, desired_date_ti
             next_order_date = last_ordered_date + average_days_between_orders
             time_until_next_order = next_order_date - desired_date_time_64
 
-            print "Confidence            : " + str("%.2f" % item_ordered_percentage)
-            print "Last Order            : " + str(last_ordered_date)
-            print "Next Order            : " + str(next_order_date)
-            print "Time Until Next Order : " + str(time_until_next_order)
-
             # Dictionary to test again
             result_dic[material_id] = {
                 "confidence": "%.2f" % item_ordered_percentage,
@@ -77,23 +75,21 @@ def predict_order_date_of_items_for_customer(customer, csv_path, desired_date_ti
         else:
             message = "Not ordering enough data to predict this item"
 
-            print message
-
             result_dic[material_id] = {
                 "confidence": "%.2f" % item_ordered_percentage,
                 "message": message
             }
 
-        print "---"
-
-    #Do excel stuff (maybe move this to run.py?)
+    # Do excel stuff (maybe move this to run.py?)
     excel_output_file_name = "predictions.xlsx"
     writer = pd.ExcelWriter(excel_output_file_name, engine="xlsxwriter")
     item_results_data_frame = pd.DataFrame(result_list, columns=["material_id", "confidence", "last_ordered_date", "predicted_next_order_date", "time_until_next_order"])
     item_results_data_frame.to_excel(writer, sheet_name="Predictions")
     writer.save()
 
-    print "Predictions written to: " + excel_output_file_name
-    print "--- Report generated in %s seconds ---" % (time.time() - start_time)
+    print colors.line(
+        "okgreen",
+        "--- Predictions written to " + excel_output_file_name + " in " + str(time.time() - start_time)
+    )
 
     return result_dic

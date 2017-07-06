@@ -1,8 +1,5 @@
-- Add excel for regular run as well
-- Configuration file instead of env vars
+- performance
+- prediction success %
 - https://dev.to/dmerejkowsky/how-i-lint-my-python
 - Should be able to input desired date with fallback to current date
-- Optimize the hell out of it
-- Refactor, cleanup, comments
 - Provide better interface for user
-- Make it smerter

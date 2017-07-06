@@ -32,23 +32,6 @@ python test.py
 
 ## Output
 
-The output will consist of results as seen below for each item the customer orders. `Time Until Next Order` is currently only using today"s date for comparison, making this dynamic is on the [todo](TODO.md) list. These are also output in `.xlsx` format.
+The predictions are output in `.xlsx` format to a file specified in the config. `Time Until Next Order` is currently only using today"s date for comparison, making this dynamic is on the [todo](TODO.md) list.
 
-```bash
----------------------------
-Material ID: 5543871.0
-Confidence: 14.2857142857
-Last Order: 2015-05-19T20:00:00.000000000-0400
-Next Order: 2015-06-04 08:00:00
-Time Until Next Order: -759 days +21:03:04.406325
-```
-
-Running the test will output statistics about the accuracy of each items prediction. These are also output in `.xlsx` format with a sheet representing overall results and a sheet specific to titems.
-
-```bash
-------------------- Testing
-Material ID: 1581263.0
-Predicted Date: 2015-06-04 01:42:51.428571428
-Confidence Level: 60.7142857143
-Reality Date: 2015-06-02T20:00:00.000000000-0400
-```
+Running the test will output statistics output in `.xlsx` format with a sheet representing overall results and a sheet specific to titems.
